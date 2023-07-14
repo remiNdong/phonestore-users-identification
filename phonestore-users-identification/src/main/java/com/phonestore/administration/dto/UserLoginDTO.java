@@ -1,4 +1,4 @@
-package com.phonestore.catalogue.dto;
+package com.phonestore.administration.dto;
 
 
 import javax.validation.constraints.Email;
