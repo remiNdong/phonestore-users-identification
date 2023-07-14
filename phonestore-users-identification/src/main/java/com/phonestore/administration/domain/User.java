@@ -36,9 +36,11 @@ public class User {
 	private String prenom;
 	
 	private String nom;
+	
+	private String numeroTel;
 
 	private String password;
-	private Boolean enabled;
+	
 
 	  @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 		@JoinTable(name="user_role",joinColumns = @JoinColumn(name="user_id") , 
