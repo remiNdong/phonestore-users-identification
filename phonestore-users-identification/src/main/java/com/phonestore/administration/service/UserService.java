@@ -1,5 +1,7 @@
 package com.phonestore.administration.service;
 
+import java.util.List;
+
 import com.phonestore.administration.domain.Role;
 import com.phonestore.administration.domain.User;
 import com.phonestore.administration.dto.UserCreationDTO;
@@ -21,7 +23,9 @@ public interface UserService {
 
 	User addRoleToUser(String username, String rolename);
 	
+	List<User> findAllUsers();
 	
+	User findById(Long id);
 	
 	
 }

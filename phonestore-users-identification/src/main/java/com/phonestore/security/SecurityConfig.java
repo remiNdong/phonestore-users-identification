@@ -78,8 +78,13 @@ public class SecurityConfig {
 					}
 				}).and()
 
-				.authorizeHttpRequests().antMatchers("/login").permitAll().anyRequest().authenticated().and()
-				.addFilterBefore(new JWTAuthenticationFilter(authMgr), UsernamePasswordAuthenticationFilter.class);
+				.authorizeHttpRequests().antMatchers("/login").permitAll()
+				.antMatchers("/all").hasAnyAuthority("ADMIN")
+				.antMatchers("/one/**").hasAnyAuthority("EMP")
+				.antMatchers("/user").authenticated()
+				.anyRequest().permitAll().and()
+				.addFilterBefore(new JWTAuthenticationFilter(authMgr), UsernamePasswordAuthenticationFilter.class)
+				.addFilterBefore(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
 		return http.build();
 	}
 

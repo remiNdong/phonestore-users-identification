@@ -24,7 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.phonestore.administration.dto.UserLoginDTO;
 
 /*
- * Classe qui sera utilisée à chaque connexion
+ * Classe qui sera utilisée à chaque login
  *  Elle permettra d'authentifier l'utilisateur, et en cas de reussite,
  *  de creer un token contenant l'username et ses roles et d'integrer ce token
  *  à la reponse http
