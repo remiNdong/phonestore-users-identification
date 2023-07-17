@@ -20,7 +20,7 @@ import com.phonestore.administration.service.UserService;
  */
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin//(origins = "*")
 public class UserRestController {
 	
 	@Autowired
