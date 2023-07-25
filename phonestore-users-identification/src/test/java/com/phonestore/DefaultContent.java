@@ -6,12 +6,12 @@ public class DefaultContent {
 	
 	public static UserCreationDTO userCreationDTOEmploye() {
 		
-		return new UserCreationDTO("employe@hotmail.fr", "John", "Lebosseur", "0611121314", "employe01", "employe01", null);
+		return new UserCreationDTO("employe@hotmail.fr", "John", "Lebosseur", "0611121314", "employe01", "employe01");
 	}
 	
 public static UserCreationDTO userCreationDTOUsager() {
 		
-		return new UserCreationDTO("client@hotmail.fr", "Jack", "Leclient", "0621222324", "client01", "client01", null);
+		return new UserCreationDTO("client@hotmail.fr", "Jack", "Leclient", "0621222324", "client01", "client01");
 	}
 
 

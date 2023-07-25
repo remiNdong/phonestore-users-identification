@@ -55,7 +55,7 @@ public class SecurityConfig {
 					public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
 						CorsConfiguration config = new CorsConfiguration();
 
-						config.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
+						//config.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
 						config.setAllowedMethods(Collections.singletonList("*"));
 						config.setAllowCredentials(true);
 						config.setAllowedHeaders(Collections.singletonList("*"));
@@ -79,7 +79,8 @@ public class SecurityConfig {
 				}).and()
 
 				.authorizeHttpRequests().antMatchers("/login").permitAll()
-				.antMatchers("/all").hasAnyAuthority("ADMIN")
+				.antMatchers("/all").hasAnyAuthority("ADMIN") //securisation pour tester non utilise par appli
+				.antMatchers("/addemploye").hasAnyAuthority("ADMIN")
 				.antMatchers("/one/**").hasAnyAuthority("EMP")
 				.antMatchers("/user").authenticated()
 				.anyRequest().permitAll().and()

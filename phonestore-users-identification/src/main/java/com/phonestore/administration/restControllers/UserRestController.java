@@ -1,17 +1,34 @@
 package com.phonestore.administration.restControllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.validation.ConstraintViolationException;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.phonestore.administration.dao.UserRepository;
 import com.phonestore.administration.domain.User;
+import com.phonestore.administration.dto.MessageDTO;
+import com.phonestore.administration.dto.UserCreationDTO;
+import com.phonestore.administration.exception.PasswordDoesntMatchException;
+import com.phonestore.administration.exception.UserDejaExistantException;
 import com.phonestore.administration.service.UserService;
+
 
 /*
  * Classe cree juste pour tester la restriction de l'url dans POSTMAN
@@ -47,4 +64,58 @@ public class UserRestController {
 	public String getEverybody() {
 		return "Autorisé à un tout le monde";
 	}
+	
+	@RequestMapping(value = "/addemploye", method = RequestMethod.POST)
+	public ResponseEntity<MessageDTO> addEmploye(
+			@Valid @RequestBody UserCreationDTO userCreationDTO) {
+
+		try {
+			userService.saveEmploye(userCreationDTO);
+			return ResponseEntity.ok(new MessageDTO("Création nouvel employé réussie"));
+
+		} catch (UserDejaExistantException e) {
+			return ResponseEntity.ok(new MessageDTO("Un employé est déja identifié par cet email"));
+			
+		} catch (PasswordDoesntMatchException e) {
+			return ResponseEntity.ok(new MessageDTO("Les deux mots de passe doivent être identiques"));
+
+		} catch (ConstraintViolationException e) {
+			return ResponseEntity
+					.ok(new MessageDTO("Les données entrées pour l'employé sont erronées \n" + e.getMessage()));
+
+		} catch (Exception e) {
+			return ResponseEntity
+					.ok(new MessageDTO("Un problème technique est survenu : \n" + e.getMessage()));
+		}
+	}
+	
+	
+	
+	/*
+	 * En cas d'erreur sur le formulaire userCreationDTO les erreurs
+	 * seront renvoyés dans un messageDTO
+	 */
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<MessageDTO> handleValidationExceptions(MethodArgumentNotValidException ex) {
+
+		Map<String, String> errors = new HashMap<>();
+		ex.getBindingResult().getAllErrors().forEach((error) -> {
+			String fieldName = ((FieldError) error).getField();
+			String errorMessage = error.getDefaultMessage();
+			errors.put(fieldName, errorMessage);
+		});
+
+		StringBuilder str = new StringBuilder();
+		for (String field : errors.keySet())
+			str.append(field + " : " + errors.get(field) + "\n" + " - ");
+
+		String mess = str.toString();
+		String message = mess.substring(0, mess.length()-2);
+
+		MessageDTO messageDTO = new MessageDTO(message);
+		System.out.println(messageDTO.getMessage());
+		return ResponseEntity.ok(messageDTO);
+	}
+
 }

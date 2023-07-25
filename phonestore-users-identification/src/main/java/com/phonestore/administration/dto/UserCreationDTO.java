@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserCreationDTO {
 
-	@Email
+	@NotBlank
 	private String username;
 
 	@NotBlank
@@ -35,7 +35,6 @@ public class UserCreationDTO {
 	@NotBlank
 	private String password2;
 
-	@NotNull
-	private List<Role> roles;
+	
 
 }
