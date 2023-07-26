@@ -81,6 +81,7 @@ public class SecurityConfig {
 				.authorizeHttpRequests().antMatchers("/login").permitAll()
 				.antMatchers("/all").hasAnyAuthority("ADMIN") //securisation pour tester non utilise par appli
 				.antMatchers("/addemploye").hasAnyAuthority("ADMIN")
+				.antMatchers("/addusager").hasAnyAuthority("EMP")
 				.antMatchers("/one/**").hasAnyAuthority("EMP")
 				.antMatchers("/user").authenticated()
 				.anyRequest().permitAll().and()

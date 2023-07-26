@@ -54,16 +54,24 @@ public class UserRestController {
 		return userService.findById(id);
 	}
 	
-
+/*
+ * Methode crée pour efectuer des tests avec Postman
+ */
 	@RequestMapping(value = "user", method = RequestMethod.GET)
 	public String getSimpleUser() {
 		return "Autorisé à un User connecté";
 	}
 	
+	
+	/*
+	 * Methode crée pour efectuer des tests avec Postman
+	 */
 	@RequestMapping(value = "everybody", method = RequestMethod.GET)
 	public String getEverybody() {
 		return "Autorisé à un tout le monde";
 	}
+	
+	
 	
 	@RequestMapping(value = "/addemploye", method = RequestMethod.POST)
 	public ResponseEntity<MessageDTO> addEmploye(
@@ -74,7 +82,7 @@ public class UserRestController {
 			return ResponseEntity.ok(new MessageDTO("Création nouvel employé réussie"));
 
 		} catch (UserDejaExistantException e) {
-			return ResponseEntity.ok(new MessageDTO("Un employé est déja identifié par cet email"));
+			return ResponseEntity.ok(new MessageDTO("Un utilisateur est déja identifié par cet email"));
 			
 		} catch (PasswordDoesntMatchException e) {
 			return ResponseEntity.ok(new MessageDTO("Les deux mots de passe doivent être identiques"));
@@ -82,6 +90,30 @@ public class UserRestController {
 		} catch (ConstraintViolationException e) {
 			return ResponseEntity
 					.ok(new MessageDTO("Les données entrées pour l'employé sont erronées \n" + e.getMessage()));
+
+		} catch (Exception e) {
+			return ResponseEntity
+					.ok(new MessageDTO("Un problème technique est survenu : \n" + e.getMessage()));
+		}
+	}
+	
+	@RequestMapping(value = "/addusager", method = RequestMethod.POST)
+	public ResponseEntity<MessageDTO> addClient(
+			@Valid @RequestBody UserCreationDTO userCreationDTO) {
+
+		try {
+			userService.saveUsager(userCreationDTO);
+			return ResponseEntity.ok(new MessageDTO("Création nouvel usager réussie"));
+
+		} catch (UserDejaExistantException e) {
+			return ResponseEntity.ok(new MessageDTO("Un utilisateur est déja identifié par cet email"));
+			
+		} catch (PasswordDoesntMatchException e) {
+			return ResponseEntity.ok(new MessageDTO("Les deux mots de passe doivent être identiques"));
+
+		} catch (ConstraintViolationException e) {
+			return ResponseEntity
+					.ok(new MessageDTO("Les données entrées pour l'usager sont erronées \n" + e.getMessage()));
 
 		} catch (Exception e) {
 			return ResponseEntity
