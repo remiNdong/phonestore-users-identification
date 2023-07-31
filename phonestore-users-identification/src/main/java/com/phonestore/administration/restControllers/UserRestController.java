@@ -25,6 +25,7 @@ import com.phonestore.administration.dao.UserRepository;
 import com.phonestore.administration.domain.User;
 import com.phonestore.administration.dto.MessageDTO;
 import com.phonestore.administration.dto.UserCreationDTO;
+import com.phonestore.administration.dto.UserDTO;
 import com.phonestore.administration.exception.PasswordDoesntMatchException;
 import com.phonestore.administration.exception.UserDejaExistantException;
 import com.phonestore.administration.service.UserService;

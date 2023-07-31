@@ -18,6 +18,7 @@ public interface UserService {
 	User findUserByUsername(String username);
 	
 	UserDTO findUserDTOByUsername(String username);
+	
 
 	Role addRole(Role role);
 
