@@ -41,6 +41,7 @@ public class User {
 
 	private String password;
 	
+	//en realite dans la logique metier un utilisateur n'aura qu'un seul role
 
 	  @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 		@JoinTable(name="user_role",joinColumns = @JoinColumn(name="user_id") , 

@@ -32,7 +32,7 @@ import com.phonestore.administration.service.UserService;
 
 
 /*
- * Classe cree juste pour tester la restriction de l'url dans POSTMAN
+ * tests sur les restrictions de l'url dans POSTMAN
  * tests non intégrés à Junit car les token sont limités dans le temps
  * ne sera pas utilisée dans les uses cases
  */
